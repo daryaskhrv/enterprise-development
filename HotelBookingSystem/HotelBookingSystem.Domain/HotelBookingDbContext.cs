@@ -3,7 +3,7 @@ using HotelBookingSystem.Domain.Entity;
 namespace HotelBookingSystem.Domain;
 
 /// <summary>
-/// Класс для базы данных
+/// Class for database
 /// </summary>
 public class HotelBookingDbContext
 {

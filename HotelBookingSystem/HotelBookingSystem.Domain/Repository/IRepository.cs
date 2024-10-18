@@ -1,32 +1,32 @@
 namespace HotelBookingSystem.Domain.Repository;
 
 /// <summary>
-/// Интерфейс базовых методов доступа к данным
+/// Interface of basic data access methods
 /// </summary>
 public interface IRepository<T>
 {
     /// <summary>
-    /// Получение всех объектов
+    /// Get all objects
     /// </summary>
     public IEnumerable<T> GetAll();
 
     /// <summary>
-    /// Получение объекта по идентификатору
+    /// Get an object by ID
     /// </summary>
     public T? GetById(int id);
 
     /// <summary>
-    /// Создание объекта
+    /// Creat an object
     /// </summary>
     public void Post(T entity);
 
     /// <summary>
-    /// Изменение существующего объекта
+    /// Modify an existing object
     /// </summary>
     public bool Put(T entity);
 
     /// <summary>
-    /// Удаление объекта
+    /// Delet an object
     /// </summary>
     public bool Delete(int id);
 }

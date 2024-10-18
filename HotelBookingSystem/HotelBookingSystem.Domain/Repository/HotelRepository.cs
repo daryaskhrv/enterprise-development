@@ -3,7 +3,7 @@
 namespace HotelBookingSystem.Domain.Repository;
 
 /// <summary>
-/// Репозиторий для работы с данными отелей
+/// Repository for working with hotel data
 /// </summary>
 public class HotelRepository(HotelBookingDbContext context) : IRepository<Hotel>
 {
@@ -46,7 +46,7 @@ public class HotelRepository(HotelBookingDbContext context) : IRepository<Hotel>
     }
 
     /// <summary>
-    ///  Информация о топ 5 отелей с наибольшим числом бронирований
+    ///  Information about the top 5 hotels with the most bookings
     /// </summary>
     public IEnumerable<(Hotel hotel, int bookingCount)> GetTopHotels()
     {

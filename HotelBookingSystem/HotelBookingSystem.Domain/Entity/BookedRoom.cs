@@ -1,4 +1,4 @@
-﻿namespace HotelBookingSystem.Domain;
+﻿namespace HotelBookingSystem.Domain.Entity;
 
 /// <summary>
 /// Booked room

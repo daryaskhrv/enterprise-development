@@ -1,4 +1,6 @@
-﻿namespace HotelBookingSystem.Domain.Test;
+﻿using HotelBookingSystem.Domain.Entity;
+
+namespace HotelBookingSystem.Domain.Test;
 
 /// <summary>
 /// Responsible for providing test data

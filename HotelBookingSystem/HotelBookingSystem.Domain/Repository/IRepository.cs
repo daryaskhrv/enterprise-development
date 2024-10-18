@@ -1,7 +1,7 @@
 namespace HotelBookingSystem.Domain.Repository;
 
 /// <summary>
-/// Интерфейс базовых методов доступа к данным
+/// РРЅС‚РµСЂС„РµР№СЃ Р±Р°Р·РѕРІС‹С… РјРµС‚РѕРґРѕРІ РґРѕСЃС‚СѓРїР° Рє РґР°РЅРЅС‹Рј
 /// </summary>
 public interface IRepository<T>
 {

@@ -23,7 +23,7 @@ public interface IService<T, DTO>
     /// <summary>
     /// Modify an existing object
     /// </summary>
-    public T? Put(T putEntity);
+    public T? Put(int id, DTO putDto);
 
     /// <summary>
     /// Delet an object

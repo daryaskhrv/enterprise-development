@@ -5,85 +5,76 @@ using Microsoft.AspNetCore.Mvc;
 namespace HotelBookingSystem.Api.Controllers;
 
 /// <summary>
-/// Контроллер для управления отелями
+/// Controller for working with hotels
 /// </summary>
-[Route("api/[controller]")]
 [ApiController]
+[Route("[controller]")]
 public class HotelController(HotelService service) : ControllerBase
 {
     /// <summary>
-    /// Получить все отели
+    /// Get information about all hotels
     /// </summary>
-    [HttpGet]
-    public ActionResult<IEnumerable<HotelGetDto>> Get()
+    [HttpGet("allHotels")]
+    public ActionResult<IEnumerable<HotelGetDto>> GetAll()
     {
         var hotels = service.GetAll();
         return Ok(hotels);
     }
 
     /// <summary>
-    /// Получить отель по ID
+    /// Get information about a hotel by ID
     /// </summary>
     [HttpGet("{id}")]
-    public ActionResult<HotelGetDto> Get(int id)
+    public ActionResult<HotelGetDto> GetById(int id)
     {
         var hotel = service.GetById(id);
         if (hotel == null)
-            return NotFound(); // Возвращает статус 404, если отель не найден
+            return NotFound($"Hotel with id {id} not found."); 
         return Ok(hotel);
     }
 
     /// <summary>
-    /// Добавить новый отель
+    /// Insert new hotel
     /// </summary>
     [HttpPost]
-    public ActionResult<int> Post([FromBody] HotelPostDto postDto)
+    public ActionResult<object> Post([FromBody] HotelPostDto postDto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState); // Проверка валидности данных
-
         var newId = service.Post(postDto);
-        return CreatedAtAction(nameof(Get), new { id = newId }, newId); // Возвращает 201 с ссылкой на новый объект
+        return Ok(new { id = newId }); 
     }
 
     /// <summary>
-    /// Обновить существующий отель
+    /// Change existing hotel by ID
     /// </summary>
     [HttpPut("{id}")]
-    public ActionResult<HotelGetDto> Put(int id, [FromBody] HotelGetDto putDto)
+    public ActionResult<HotelGetDto> Put(int id, [FromBody] HotelPostDto putDto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        putDto.Id = id; // Устанавливаем ID перед обновлением
-        var updatedHotel = service.Put(putDto);
-
+        var updatedHotel = service.Put(id, putDto);
         if (updatedHotel == null)
-            return NotFound(); // Отель не найден, возвращаем 404
+            return NotFound($"Hotel with id {id} not found."); 
 
-        return Ok(updatedHotel); // Возвращаем обновленный отель
+        return Ok(updatedHotel); 
     }
 
     /// <summary>
-    /// Удалить отель по ID
+    /// Delete an existing hotel by ID
     /// </summary>
     [HttpDelete("{id}")]
-    public ActionResult Delete(int id)
+    public IActionResult Delete(int id)
     {
         var isDeleted = service.Delete(id);
         if (!isDeleted)
-            return NotFound(); // Если отель не найден, возвращаем 404
+            return NotFound($"Hotel with id {id} not found."); 
 
-        return NoContent(); // Успешное удаление, возвращаем статус 204
+        return Ok($"Hotel with identifier {id} has been deleted."); 
     }
 
     /// <summary>
     ///  Information about the top 5 hotels with the most bookings
     /// </summary>
-    [HttpGet("top5")]
+    [HttpGet("topHotels")]
     public ActionResult<IEnumerable<HotelGetDto>> GetTopHotels()
     {
-        var topHotels = service.GetTopHotels();
-        return Ok(topHotels);
+        return Ok(service.GetTopHotels());
     }
 }

@@ -29,9 +29,10 @@ public class HotelClientService(HotelClientRepository repository, IMapper mapper
     }
 
     /// <inheritdoc />
-    public HotelClientGetDto? Put(HotelClientGetDto putDto)
+    public HotelClientGetDto? Put(int id, HotelClientPostDto putDto)
     {
         var hotelClient = mapper.Map<HotelClientGetDto>(putDto);
+        hotelClient.Id = id;
         bool isUpdated = repository.Put(hotelClient);
         if (isUpdated)
             return repository.GetById(hotelClient.Id);

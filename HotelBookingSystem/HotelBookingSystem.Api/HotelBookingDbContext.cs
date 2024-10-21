@@ -20,6 +20,7 @@ public class HotelBookingDbContext
 
     public HotelBookingDbContext()
     {
+        //Hotels = new List<HotelGetDto>();
         Hotels =
         [
             new HotelGetDto { Id = 1, Name = "Alpha", City = "Moscow", Address = "Lenina St, 1" },

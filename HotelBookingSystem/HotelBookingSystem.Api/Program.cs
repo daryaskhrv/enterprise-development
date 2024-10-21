@@ -11,8 +11,16 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddSingleton<HotelBookingDbContext>();
+
 builder.Services.AddSingleton<HotelRepository>();
+builder.Services.AddSingleton<HotelClientRepository>();
+builder.Services.AddSingleton<RoomRepository>();
+builder.Services.AddSingleton<BookedRoomRepository>();
+
 builder.Services.AddSingleton<HotelService>();
+builder.Services.AddSingleton<HotelClientService>();
+builder.Services.AddSingleton<RoomService>();
+builder.Services.AddSingleton<BookedRoomService>();
 
 builder.Services.AddAutoMapper(typeof(Mapping));
 

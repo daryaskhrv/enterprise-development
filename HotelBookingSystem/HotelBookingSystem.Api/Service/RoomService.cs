@@ -5,7 +5,7 @@ using HotelBookingSystem.Api.Repository;
 namespace HotelBookingSystem.Api.Service;
 
 /// <summary>
-/// Service for working with client class 
+/// Service for working with room class 
 /// </summary>
 public class RoomService(RoomRepository repository, IMapper mapper) : IService<RoomGetDto, RoomPostDto>
 {

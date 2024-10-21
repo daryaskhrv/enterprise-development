@@ -16,6 +16,11 @@ public class BookedRoomRepository(HotelBookingDbContext context) : IRepository<B
     /// <inheritdoc />
     public int Post(BookedRoomGetDto bookedRoom)
     {
+        var clientExists = context.HotelClients.Any(c => c.Id == bookedRoom.ClientId);
+        var roomExists = context.Rooms.Any(r => r.Id == bookedRoom.RoomId);
+        if (!clientExists || !roomExists)
+            return -1;
+
         int newId = context.BookedRooms.Count > 0 ? context.BookedRooms.Max(br => br.Id) + 1 : 1;
         bookedRoom.Id = newId;
         context.BookedRooms.Add(bookedRoom);
@@ -30,8 +35,6 @@ public class BookedRoomRepository(HotelBookingDbContext context) : IRepository<B
         if (oldValue == null)
             return false;
 
-        oldValue.ClientId = bookedRoom.ClientId;
-        oldValue.RoomId = bookedRoom.RoomId;
         oldValue.EntryDate = bookedRoom.EntryDate;
         oldValue.DepartureDate = bookedRoom.DepartureDate;
         oldValue.BookingPeriod = bookedRoom.BookingPeriod;

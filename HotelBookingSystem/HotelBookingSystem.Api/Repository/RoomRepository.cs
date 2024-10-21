@@ -15,7 +15,11 @@ public class RoomRepository(HotelBookingDbContext context) : IRepository<RoomGet
 
     /// <inheritdoc />
     public int Post(RoomGetDto room)
-    {
+    {        
+        var hotelExists = context.Hotels.Any(h => h.Id == room.HotelId);
+        if (!hotelExists)
+            return -1;
+
         int newId = context.Rooms.Count > 0 ? context.Rooms.Max(r => r.Id) + 1 : 1;
         room.Id = newId;
         context.Rooms.Add(room);
@@ -30,7 +34,6 @@ public class RoomRepository(HotelBookingDbContext context) : IRepository<RoomGet
         if (oldValue == null)
             return false;
 
-        oldValue.HotelId = room.HotelId;
         oldValue.Price = room.Price;
         oldValue.Number = room.Number;
         oldValue.TypeRoom = room.TypeRoom;

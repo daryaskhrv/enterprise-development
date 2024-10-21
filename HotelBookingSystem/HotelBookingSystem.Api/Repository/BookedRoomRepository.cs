@@ -1,6 +1,6 @@
 ﻿using HotelBookingSystem.Api.Dto;
 
-namespace HotelBookingSystem.Domain.Repository;
+namespace HotelBookingSystem.Api.Repository;
 
 /// <summary>
 /// Repository for working with booked rooms data

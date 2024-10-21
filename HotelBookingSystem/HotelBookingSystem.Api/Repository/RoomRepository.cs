@@ -1,6 +1,6 @@
 ﻿using HotelBookingSystem.Api.Dto;
 
-namespace HotelBookingSystem.Domain.Repository;
+namespace HotelBookingSystem.Api.Repository;
 
 /// <summary>
 /// Repository for working with hotel room data
@@ -33,7 +33,6 @@ public class RoomRepository(HotelBookingDbContext context) : IRepository<RoomGet
         oldValue.HotelId = room.HotelId;
         oldValue.Price = room.Price;
         oldValue.Number = room.Number;
-        oldValue.BookedRooms = room.BookedRooms;
         oldValue.TypeRoom = room.TypeRoom;
 
         return true;

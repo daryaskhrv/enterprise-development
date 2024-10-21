@@ -1,6 +1,6 @@
 ﻿using HotelBookingSystem.Api.Dto;
 
-namespace HotelBookingSystem.Domain.Repository;
+namespace HotelBookingSystem.Api.Repository;
 
 /// <summary>
 /// Repository for working with hotel data
@@ -50,5 +50,28 @@ public class HotelRepository(HotelBookingDbContext context) : IRepository<HotelG
     /// <summary>
     ///  Information about the top 5 hotels with the most bookings
     /// </summary>
-    
+    public IEnumerable<HotelGetDto?> GetTopHotels()
+    {
+        var topHotels = context.BookedRooms
+            .GroupBy(br => br.RoomId)
+            //number of bookings for each room
+            .Select(g => new
+            {
+                context.Rooms.FirstOrDefault(r => r.Id == g.Key)?.HotelId,
+                BookingCount = g.Count()
+            })
+            .GroupBy(x => x.HotelId)
+            //number of bookings for each hotel
+            .Select(g => new
+            {
+                HotelId = g.Key,
+                TotalBookings = g.Sum(x => x.BookingCount)
+            })
+            .OrderByDescending(x => x.TotalBookings)
+            .Take(5)
+            .Select(x => context.Hotels.FirstOrDefault(h => h.Id == x.HotelId))
+            .Where(h => h != null);
+
+        return topHotels;
+    }
 }

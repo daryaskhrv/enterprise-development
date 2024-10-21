@@ -1,4 +1,4 @@
-namespace HotelBookingSystem.Domain.Repository;
+﻿namespace HotelBookingSystem.Api.Repository;
 
 /// <summary>
 /// Interface of basic data access methods

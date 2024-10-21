@@ -1,21 +1,22 @@
 ﻿using AutoMapper;
 using HotelBookingSystem.Api.Dto;
-using HotelBookingSystem.Domain.Entity;
-using HotelBookingSystem.Domain.Repository;
+using HotelBookingSystem.Api.Repository;
 
 namespace HotelBookingSystem.Api.Service;
 
-public class HotelService(HotelRepository repository, IMapper mapper) : IService<Hotel, HotelPostDto>
+/// <summary>
+/// Service for working with hotel class 
+/// </summary>
+public class HotelService(HotelRepository repository, IMapper mapper) : IService<HotelGetDto, HotelPostDto>
 {
     /// <inheritdoc />
-    public IEnumerable<Hotel> GetAll()
+    public IEnumerable<HotelGetDto> GetAll()
     {
-        //return mapper.Map<IEnumerable<Hotel>>(repository.GetAll());
         return repository.GetAll();
     }
 
     /// <inheritdoc />
-    public Hotel? GetById(int id)
+    public HotelGetDto? GetById(int id)
     {
         return repository.GetById(id);
     }
@@ -23,14 +24,14 @@ public class HotelService(HotelRepository repository, IMapper mapper) : IService
     /// <inheritdoc />
     public int Post(HotelPostDto postDto)
     {
-        return repository.Post(mapper.Map<Hotel>(postDto));
+        return repository.Post(mapper.Map<HotelGetDto>(postDto));
 
     }
 
     /// <inheritdoc />
-    public Hotel? Put(Hotel putDto)
+    public HotelGetDto? Put(HotelGetDto putDto)
     {
-        var hotel = mapper.Map<Hotel>(putDto);
+        var hotel = mapper.Map<HotelGetDto>(putDto);
         bool isUpdated = repository.Put(hotel);
         if (isUpdated)
             return repository.GetById(hotel.Id);
@@ -42,5 +43,10 @@ public class HotelService(HotelRepository repository, IMapper mapper) : IService
     public bool Delete(int id)
     {
         return repository.Delete(id);
+    }
+
+    public IEnumerable<HotelGetDto?> GetTopHotels()
+    {
+        return repository.GetTopHotels();
     }
 }

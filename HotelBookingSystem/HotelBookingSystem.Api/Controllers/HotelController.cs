@@ -1,6 +1,5 @@
 ﻿using HotelBookingSystem.Api.Dto;
 using HotelBookingSystem.Api.Service;
-using HotelBookingSystem.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBookingSystem.Api.Controllers;
@@ -16,7 +15,7 @@ public class HotelController(HotelService service) : ControllerBase
     /// Получить все отели
     /// </summary>
     [HttpGet]
-    public ActionResult<IEnumerable<Hotel>> Get()
+    public ActionResult<IEnumerable<HotelGetDto>> Get()
     {
         var hotels = service.GetAll();
         return Ok(hotels);
@@ -26,7 +25,7 @@ public class HotelController(HotelService service) : ControllerBase
     /// Получить отель по ID
     /// </summary>
     [HttpGet("{id}")]
-    public ActionResult<Hotel> Get(int id)
+    public ActionResult<HotelGetDto> Get(int id)
     {
         var hotel = service.GetById(id);
         if (hotel == null)
@@ -51,7 +50,7 @@ public class HotelController(HotelService service) : ControllerBase
     /// Обновить существующий отель
     /// </summary>
     [HttpPut("{id}")]
-    public ActionResult<Hotel> Put(int id, [FromBody] Hotel putDto)
+    public ActionResult<HotelGetDto> Put(int id, [FromBody] HotelGetDto putDto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -76,5 +75,12 @@ public class HotelController(HotelService service) : ControllerBase
             return NotFound(); // Если отель не найден, возвращаем 404
 
         return NoContent(); // Успешное удаление, возвращаем статус 204
+    }
+
+    [HttpGet("top5")]
+    public ActionResult<IEnumerable<HotelGetDto>> GetTopHotels()
+    {
+        var topHotels = service.GetTopHotels();
+        return Ok(topHotels);
     }
 }

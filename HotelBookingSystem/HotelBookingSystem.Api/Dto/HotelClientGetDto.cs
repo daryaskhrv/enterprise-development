@@ -1,10 +1,15 @@
 ﻿namespace HotelBookingSystem.Api.Dto;
 
 /// <summary>
-/// DTO class for POST method for hotel client
+/// DTO class for GET method for hotel client
 /// </summary>
-public class HotelClientPostDto
+public class HotelClientGetDto
 {
+    /// <summary>
+    /// Client ID
+    /// </summary>
+    public required int Id { get; set; }
+
     /// <summary>
     /// The number of passport of the lodger
     /// </summary>

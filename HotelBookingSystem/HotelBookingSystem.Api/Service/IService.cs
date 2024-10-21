@@ -1,9 +1,9 @@
-namespace HotelBookingSystem.Domain.Repository;
+﻿namespace HotelBookingSystem.Api.Service;
 
 /// <summary>
-/// Interface of basic data access methods
+/// Interface for entity services
 /// </summary>
-public interface IRepository<T>
+public interface IService<T, DTO>
 {
     /// <summary>
     /// Get all objects
@@ -18,12 +18,12 @@ public interface IRepository<T>
     /// <summary>
     /// Creat an object
     /// </summary>
-    public void Post(T entity);
+    public int Post(DTO postDto);
 
     /// <summary>
     /// Modify an existing object
     /// </summary>
-    public bool Put(T entity);
+    public T? Put(T putEntity);
 
     /// <summary>
     /// Delet an object

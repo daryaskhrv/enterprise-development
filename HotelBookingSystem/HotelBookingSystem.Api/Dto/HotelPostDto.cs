@@ -1,6 +1,4 @@
-﻿using HotelBookingSystem.Domain.Entity;
-
-namespace HotelBookingSystem.Api.Dto;
+﻿namespace HotelBookingSystem.Api.Dto;
 
 /// <summary>
 /// DTO class for POST method in hotel

@@ -15,8 +15,4 @@
     <ProjectReference Include="..\HotelBookingSystem.Domain\HotelBookingSystem.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
-
 </Project>

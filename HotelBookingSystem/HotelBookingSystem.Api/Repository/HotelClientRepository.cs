@@ -1,26 +1,29 @@
-﻿using HotelBookingSystem.Domain.Entity;
+﻿using HotelBookingSystem.Api.Dto;
 
 namespace HotelBookingSystem.Domain.Repository;
 
 /// <summary>
 /// Repository for working with hotel client data
 /// </summary>
-internal class HotelClientRepository(HotelBookingDbContext context) : IRepository<HotelClient>
+internal class HotelClientRepository(HotelBookingDbContext context) : IRepository<HotelClientGetDto>
 {
     /// <inheritdoc />
-    public IEnumerable<HotelClient> GetAll() => context.HotelClients;
+    public IEnumerable<HotelClientGetDto> GetAll() => context.HotelClients;
 
     /// <inheritdoc />
-    public HotelClient? GetById(int id) => context.HotelClients.Find(x => x.Id == id);
+    public HotelClientGetDto? GetById(int id) => context.HotelClients.Find(x => x.Id == id);
 
     /// <inheritdoc />
-    public void Post(HotelClient hotelClient)
+    public int Post(HotelClientGetDto hotelClient)
     {
+        int newId = context.HotelClients.Count > 0 ? context.HotelClients.Max(hc => hc.Id) + 1 : 1;
+        hotelClient.Id = newId;
         context.HotelClients.Add(hotelClient);
+        return newId;
     }
 
     /// <inheritdoc />
-    public bool Put(HotelClient hotelClient)
+    public bool Put(HotelClientGetDto hotelClient)
     {
         var oldValue = GetById(hotelClient.Id);
 
@@ -32,7 +35,6 @@ internal class HotelClientRepository(HotelBookingDbContext context) : IRepositor
         oldValue.Surname = hotelClient.Surname;
         oldValue.Patronymic = hotelClient.Patronymic;
         oldValue.Birthdate = hotelClient.Birthdate;
-        oldValue.BookedRooms = hotelClient.BookedRooms;
 
         return true;
     }

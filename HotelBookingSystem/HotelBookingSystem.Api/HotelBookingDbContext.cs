@@ -55,9 +55,9 @@ public class HotelBookingDbContext
             new RoomGetDto { Id = 9, TypeRoom = "suite", Number = 4, Price = 2600, HotelId = 5 },
             new RoomGetDto { Id = 10, TypeRoom = "standard", Number = 3, Price = 1150, HotelId = 7 },
         ];
-        BookedRooms = new List<BookedRoomGetDto>();
-
-        /*BookedRooms = 
+        //BookedRooms = new List<BookedRoomGetDto>();
+        /**/
+        BookedRooms = 
         [
             new BookedRoomGetDto { Id = 0, ClientId = 0, RoomId = 0, EntryDate = new DateOnly(2024, 01, 01),
                 DepartureDate = new DateOnly(2024, 01, 03), BookingPeriod = new TimeSpan(2, 0, 0, 0) },
@@ -75,6 +75,6 @@ public class HotelBookingDbContext
                 DepartureDate = new DateOnly(2024, 06, 03), BookingPeriod = new TimeSpan(2, 0, 0, 0) },
             new BookedRoomGetDto { Id = 7, ClientId = 3, RoomId = 7, EntryDate = new DateOnly(2024, 06, 01),
                 DepartureDate = new DateOnly(2024, 06, 03), BookingPeriod = new TimeSpan(2, 0, 0, 0) },
-        ];*/
+        ];
     }
 }

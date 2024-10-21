@@ -45,6 +45,9 @@ public class HotelService(HotelRepository repository, IMapper mapper) : IService
         return repository.Delete(id);
     }
 
+    /// <summary>
+    ///  Information about the top 5 hotels with the most bookings
+    /// </summary>
     public IEnumerable<HotelGetDto?> GetTopHotels()
     {
         return repository.GetTopHotels();

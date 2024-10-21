@@ -77,6 +77,9 @@ public class HotelController(HotelService service) : ControllerBase
         return NoContent(); // Успешное удаление, возвращаем статус 204
     }
 
+    /// <summary>
+    ///  Information about the top 5 hotels with the most bookings
+    /// </summary>
     [HttpGet("top5")]
     public ActionResult<IEnumerable<HotelGetDto>> GetTopHotels()
     {

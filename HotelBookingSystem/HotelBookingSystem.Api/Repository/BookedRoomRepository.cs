@@ -5,7 +5,7 @@ namespace HotelBookingSystem.Api.Repository;
 /// <summary>
 /// Repository for working with booked rooms data
 /// </summary>
-internal class BookedRoomRepository(HotelBookingDbContext context) : IRepository<BookedRoomGetDto>
+public class BookedRoomRepository(HotelBookingDbContext context) : IRepository<BookedRoomGetDto>
 {
     /// <inheritdoc />
     public IEnumerable<BookedRoomGetDto> GetAll() => context.BookedRooms;

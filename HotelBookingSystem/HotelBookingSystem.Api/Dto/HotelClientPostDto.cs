@@ -25,8 +25,13 @@ public class HotelClientPostDto
     /// </summary>
     public string? Patronymic { get; set; }
 
-    /// <summary>
+    /*/// <summary>
     /// Client's date of birth
     /// </summary>
-    public required DateOnly Birthdate { get; set; }
+    public required DateOnly Birthdate { get; set; }*/
+
+    /// <summary>
+    /// Client's date of birth in "yyyy-MM-dd" format
+    /// </summary>
+    public required string Birthdate { get; set; }
 }

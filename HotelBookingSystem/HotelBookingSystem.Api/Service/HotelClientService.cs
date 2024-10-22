@@ -25,7 +25,6 @@ public class HotelClientService(HotelClientRepository repository, IMapper mapper
     public int Post(HotelClientPostDto postDto)
     {
         return repository.Post(mapper.Map<HotelClientGetDto>(postDto));
-
     }
 
     /// <inheritdoc />

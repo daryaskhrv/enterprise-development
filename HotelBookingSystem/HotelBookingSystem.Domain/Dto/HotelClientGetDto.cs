@@ -1,10 +1,15 @@
-﻿namespace HotelBookingSystem.Api.Dto;
+﻿namespace HotelBookingSystem.Domain.Dto;
 
 /// <summary>
-/// DTO class for POST method for hotel client
+/// DTO class for GET method for hotel client
 /// </summary>
-public class HotelClientPostDto
+public class HotelClientGetDto
 {
+    /// <summary>
+    /// Client ID
+    /// </summary>
+    public required int Id { get; set; }
+
     /// <summary>
     /// The number of passport of the lodger
     /// </summary>
@@ -25,13 +30,8 @@ public class HotelClientPostDto
     /// </summary>
     public string? Patronymic { get; set; }
 
-    /*/// <summary>
+    /// <summary>
     /// Client's date of birth
     /// </summary>
-    public required DateOnly Birthdate { get; set; }*/
-
-    /// <summary>
-    /// Client's date of birth in "yyyy-MM-dd" format
-    /// </summary>
-    public required string Birthdate { get; set; }
+    public required DateOnly Birthdate { get; set; }
 }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using HotelBookingSystem.Api.Dto;
+using HotelBookingSystem.Domain.Dto;
 
 namespace HotelBookingSystem.Api;
 

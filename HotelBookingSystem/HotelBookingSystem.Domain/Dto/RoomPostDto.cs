@@ -1,15 +1,10 @@
-﻿namespace HotelBookingSystem.Api.Dto;
+﻿namespace HotelBookingSystem.Domain.Dto;
 
 /// <summary>
-/// DTO class for GET method in hotel room
+/// DTO class for POST method in hotel room
 /// </summary>
-public class RoomGetDto
+public class RoomPostDto
 {
-    /// <summary>
-    /// Hotel room ID
-    /// </summary>
-    public required int Id { get; set; }
-
     /// <summary>
     /// Hotel room type
     /// </summary>

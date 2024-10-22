@@ -1,6 +1,6 @@
-﻿using HotelBookingSystem.Api.Dto;
+﻿using HotelBookingSystem.Domain.Dto;
 
-namespace HotelBookingSystem.Api;
+namespace HotelBookingSystem.Domain;
 
 /// <summary>
 /// Class for database
@@ -39,7 +39,7 @@ public class HotelBookingDbContext
             new HotelClientGetDto { Id = 5, Passport = 6666, Name = "Elena", Surname = "Vasina", Patronymic = "Aleksandrovna", Birthdate = new DateOnly(2002, 06, 06) },
         ];
 
-        Rooms = 
+        Rooms =
         [
             new RoomGetDto { Id = 0, TypeRoom = "standard", Number = 10, Price = 1000, HotelId = 1 },
             new RoomGetDto { Id = 1, TypeRoom = "superior", Number = 5, Price = 1700, HotelId = 2 },
@@ -55,7 +55,7 @@ public class HotelBookingDbContext
         ];
         //BookedRooms = new List<BookedRoomGetDto>();
         /**/
-        BookedRooms = 
+        BookedRooms =
         [
             new BookedRoomGetDto { Id = 0, ClientId = 0, RoomId = 0, EntryDate = new DateOnly(2024, 01, 01),
                 DepartureDate = new DateOnly(2024, 01, 03), BookingPeriod = new TimeSpan(2, 0, 0, 0) },

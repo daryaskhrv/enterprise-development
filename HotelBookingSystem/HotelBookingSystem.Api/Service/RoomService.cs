@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using HotelBookingSystem.Api.Dto;
-using HotelBookingSystem.Api.Repository;
+using HotelBookingSystem.Domain.Dto;
+using HotelBookingSystem.Domain.Repository;
 
 namespace HotelBookingSystem.Api.Service;
 

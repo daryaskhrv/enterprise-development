@@ -1,6 +1,7 @@
 using HotelBookingSystem.Api;
-using HotelBookingSystem.Api.Repository;
 using HotelBookingSystem.Api.Service;
+using HotelBookingSystem.Domain;
+using HotelBookingSystem.Domain.Repository;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

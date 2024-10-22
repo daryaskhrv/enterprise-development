@@ -1,7 +1,6 @@
-﻿using HotelBookingSystem.Api.Dto;
-using HotelBookingSystem.Domain.Entity;
+﻿using HotelBookingSystem.Domain.Dto;
 
-namespace HotelBookingSystem.Api.Repository;
+namespace HotelBookingSystem.Domain.Repository;
 
 /// <summary>
 /// Repository for working with hotel room data
@@ -16,7 +15,7 @@ public class RoomRepository(HotelBookingDbContext context) : IRepository<RoomGet
 
     /// <inheritdoc />
     public int Post(RoomGetDto room)
-    {        
+    {
         var hotelExists = context.Hotels.Any(h => h.Id == room.HotelId);
         if (!hotelExists)
             return -1;

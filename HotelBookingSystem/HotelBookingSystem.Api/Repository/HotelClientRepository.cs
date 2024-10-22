@@ -48,4 +48,42 @@ public class HotelClientRepository(HotelBookingDbContext context) : IRepository<
         context.HotelClients.Remove(hotelClient);
         return true;
     }
+
+    /// <summary>
+    /// Gets all clients in the specified hotel, sorted by full name
+    /// </summary>
+    public IEnumerable<HotelClientGetDto> GetClientsInHotel(string hotelName)
+    {
+        var hotelId = context.Hotels.FirstOrDefault(hotel => hotel.Name == hotelName)?.Id;
+
+        var clientIds = context.BookedRooms
+            .Where(br => br.RoomId != 0 && context.Rooms.FirstOrDefault(r => r.Id == br.RoomId)?.HotelId == hotelId)
+            .Select(br => br.ClientId)
+            .Distinct();
+
+        return context.HotelClients
+            .Where(client => clientIds.Contains(client.Id))
+            .OrderBy(client => client.Surname)
+            .ThenBy(client => client.Name)
+            .ThenBy(client => client.Patronymic)
+            .ToList();
+    }
+
+    /// <summary>
+    /// Gets clients who rented rooms for the longest duration
+    /// </summary>
+    public IEnumerable<HotelClientGetDto?> GetClientsWithLongestRentalPeriod()
+    {
+        var maxRentalPeriod = context.BookedRooms
+            .Max(broom => broom.BookingPeriod.Days);
+
+        return context.BookedRooms
+            .Where(broom => broom.BookingPeriod.Days == maxRentalPeriod)
+            .Select(broom => new
+            {
+                Client = context.HotelClients.FirstOrDefault(client => client.Id == broom.ClientId)
+            })
+            .AsEnumerable()
+            .Select(x => x.Client);
+    }
 }

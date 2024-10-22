@@ -46,4 +46,19 @@ public class RoomService(RoomRepository repository, IMapper mapper) : IService<R
         return repository.Delete(id);
     }
 
+    /// <summary>
+    /// Information about available rooms in all hotels of the selected city
+    /// </summary>
+    public IEnumerable<RoomAvailabilityDto> FreeRoomsInCity(string city)
+    {
+        return repository.FreeRoomsInCity(city);
+    }
+
+    /// <summary>
+    /// Gets the minimum, average and maximum room rates for each hotel
+    /// </summary>
+    public IEnumerable<RoomPriceStatisticsDto> GetRoomPriceStatistics()
+    { 
+        return repository.GetRoomPriceStatistics();
+    }
 }

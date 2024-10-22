@@ -68,4 +68,26 @@ public class RoomController(RoomService service) : ControllerBase
 
         return Ok($"Booking with identifier {id} has been deleted.");
     }
+
+    /// <summary>
+    /// Gets available rooms in the specified city
+    /// </summary>
+    [HttpGet("free-rooms/{city}")]
+    public ActionResult<IEnumerable<RoomAvailabilityDto>> FreeRoomsInCity(string city)
+    {
+        var availableRooms = service.FreeRoomsInCity(city);
+        if (availableRooms == null || !availableRooms.Any())
+            return NotFound($"No available rooms found in {city}.");
+
+        return Ok(availableRooms);
+    }
+
+    /// <summary>
+    /// Gets the minimum, average and maximum room rates for each hotel
+    /// </summary>
+    [HttpGet("price-statistics")]
+    public ActionResult<IEnumerable<RoomPriceStatisticsDto>> GetRoomPriceStatistics()
+    {
+        return Ok(service.GetRoomPriceStatistics());
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using HotelBookingSystem.Api.Dto;
+using HotelBookingSystem.Domain.Entity;
 
 namespace HotelBookingSystem.Api.Repository;
 
@@ -49,5 +50,47 @@ public class RoomRepository(HotelBookingDbContext context) : IRepository<RoomGet
             return false;
         context.Rooms.Remove(room);
         return true;
+    }
+
+    /// <summary>
+    /// Information about available rooms in all hotels of the selected city
+    /// </summary>
+    public IEnumerable<RoomAvailabilityDto> FreeRoomsInCity(string city)
+    {
+        var freeRooms = context.Hotels
+            .Where(hotel => hotel.City == city)
+            .SelectMany(hotel =>
+                context.Rooms
+                    .Where(room => room.HotelId == hotel.Id)
+                    .Select(room => new RoomAvailabilityDto
+                    {
+                        HotelName = hotel.Name,
+                        RoomId = room.Id,
+                        RoomType = room.TypeRoom,
+                        AvailableRooms = room.Number -
+                                         context.BookedRooms.Count(b => b.RoomId == room.Id)
+                    })
+                    .Where(r => r.AvailableRooms > 0)
+            )
+            .ToList();
+
+        return freeRooms;
+    }
+
+    /// <summary>
+    /// Gets the minimum, average and maximum room rates for each hotel
+    /// </summary>
+    public IEnumerable<RoomPriceStatisticsDto> GetRoomPriceStatistics()
+    {
+        return context.Rooms
+            .GroupBy(room => room.HotelId)
+            .Select(g => new RoomPriceStatisticsDto
+            {
+                HotelId = g.Key,
+                MinPrice = g.Min(room => room.Price),
+                AvgPrice = g.Average(room => room.Price),
+                MaxPrice = g.Max(room => room.Price)
+            })
+            .ToList();
     }
 }

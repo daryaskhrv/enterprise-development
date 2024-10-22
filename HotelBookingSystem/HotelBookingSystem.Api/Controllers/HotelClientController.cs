@@ -68,4 +68,32 @@ public class HotelClientController(HotelClientService service) : ControllerBase
 
         return Ok($"Client with identifier {id} has been deleted.");
     }
+
+    /// <summary>
+    /// Gets all clients in the specified hotel, sorted by full name
+    /// </summary>
+    [HttpGet("hotel/{hotelName}")]
+    public ActionResult<IEnumerable<HotelClientGetDto>> GetClientsInHotel(string hotelName)
+    {
+        var clients = service.GetClientsInHotel(hotelName);
+
+        if (clients == null || !clients.Any())
+            return NotFound("Hotel/clients not found");
+
+        return Ok(clients);
+    }
+
+    /// <summary>
+    /// Gets clients who rented rooms for the longest duration
+    /// </summary>
+    [HttpGet("longest-rental")]
+    public ActionResult<IEnumerable<HotelClientGetDto>> GetClientsWithLongestRentalPeriod()
+    {
+        var clients = service.GetClientsWithLongestRentalPeriod();
+
+        if (clients == null || !clients.Any())
+            return NotFound("Clients not found");
+
+        return Ok(clients);
+    }
 }

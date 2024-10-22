@@ -45,4 +45,19 @@ public class HotelClientService(HotelClientRepository repository, IMapper mapper
         return repository.Delete(id);
     }
 
+    /// <summary>
+    /// Gets all clients in the specified hotel, sorted by full name
+    /// </summary>
+    public IEnumerable<HotelClientGetDto> GetClientsInHotel(string hotelName)
+    {
+        return repository.GetClientsInHotel(hotelName);
+    }
+
+    /// <summary>
+    /// Gets clients who rented rooms for the longest duration
+    /// </summary>
+    public IEnumerable<HotelClientGetDto?> GetClientsWithLongestRentalPeriod()
+    {
+        return repository.GetClientsWithLongestRentalPeriod();
+    }
 }

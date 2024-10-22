@@ -16,17 +16,12 @@ public class BookedRoomPostDto
     public required int RoomId { get; set; }
 
     /// <summary>
-    /// Date of entry
+    /// Date of entry in "yyyy-MM-dd" format
     /// </summary>
-    public required DateOnly EntryDate { get; set; }
+    public required string EntryDate { get; set; }
 
     /// <summary>
-    /// Departure date
+    /// Departure date in "yyyy-MM-dd" format
     /// </summary>
-    public required DateOnly DepartureDate { get; set; }
-
-    /// <summary>
-    /// Reservation period
-    /// </summary>
-    public required TimeSpan BookingPeriod { get; set; }
+    public required string DepartureDate { get; set; }
 }

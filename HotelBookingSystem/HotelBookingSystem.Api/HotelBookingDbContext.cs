@@ -31,12 +31,6 @@ public class HotelBookingDbContext
 
         HotelClients =
         [
-            /*new HotelClientGetDto { Id = 0, Passport = 1111, Name = "John", Surname = "Sidorov", Patronymic = "Sergeevich", Birthdate = new DateOnly(1990, 01, 01) },
-            new HotelClientGetDto { Id = 1, Passport = 2222, Name = "Peter", Surname = "Chelaev", Patronymic = "Mikhailovich", Birthdate = new DateOnly(1992, 02, 02) },
-            new HotelClientGetDto { Id = 2, Passport = 3333, Name = "Sergey", Surname = "Morozov", Patronymic = "Ivanovich", Birthdate = new DateOnly(1995, 03, 03) },
-            new HotelClientGetDto { Id = 3, Passport = 4444, Name = "Anna", Surname = "Shcherbakova", Patronymic = "Nikitichna", Birthdate = new DateOnly(1998, 04, 04) },
-            new HotelClientGetDto { Id = 4, Passport = 5555, Name = "Michael", Surname = "Popov", Patronymic = "Andreevich", Birthdate = new DateOnly(2000, 05, 05) },
-            new HotelClientGetDto { Id = 5, Passport = 6666, Name = "Elena", Surname = "Vasina", Patronymic = "Aleksandrovna", Birthdate = new DateOnly(2002, 06, 06) },*/
             new HotelClientGetDto { Id = 0, Passport = 1111, Name = "John", Surname = "Sidorov", Patronymic = "Sergeevich", Birthdate = new DateOnly(1990, 01, 01) },
             new HotelClientGetDto { Id = 1, Passport = 2222, Name = "Peter", Surname = "Chelaev", Patronymic = "Mikhailovich", Birthdate = new DateOnly(1992, 02, 02) },
             new HotelClientGetDto { Id = 2, Passport = 3333, Name = "Sergey", Surname = "Morozov", Patronymic = "Ivanovich", Birthdate = new DateOnly(1995, 03, 03) },

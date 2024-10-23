@@ -16,7 +16,7 @@ public class HotelRepository(HotelBookingDbContext context) : IRepository<HotelG
     /// <inheritdoc />
     public int Post(HotelGetDto hotel)
     {
-        int newId = context.Hotels.Count > 0 ? context.Hotels.Max(h => h.Id) + 1 : 1;
+        var newId = context.Hotels.Count > 0 ? context.Hotels.Max(h => h.Id) + 1 : 1;
         hotel.Id = newId;
         context.Hotels.Add(hotel);
         return newId;

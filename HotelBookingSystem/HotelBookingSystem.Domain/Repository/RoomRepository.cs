@@ -20,7 +20,7 @@ public class RoomRepository(HotelBookingDbContext context) : IRepository<RoomGet
         if (!hotelExists)
             return -1;
 
-        int newId = context.Rooms.Count > 0 ? context.Rooms.Max(r => r.Id) + 1 : 1;
+        var newId = context.Rooms.Count > 0 ? context.Rooms.Max(r => r.Id) + 1 : 1;
         room.Id = newId;
         context.Rooms.Add(room);
         return newId;

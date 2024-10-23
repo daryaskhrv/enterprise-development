@@ -3,7 +3,7 @@
 /// <summary>
 /// Interface for entity services
 /// </summary>
-public interface IService<T, DTO>
+public interface IService<T, TDto>
 {
     /// <summary>
     /// Get all objects
@@ -16,17 +16,17 @@ public interface IService<T, DTO>
     public T? GetById(int id);
 
     /// <summary>
-    /// Creat an object
+    /// Create an object
     /// </summary>
-    public int Post(DTO postDto);
+    public int Post(TDto postDto);
 
     /// <summary>
     /// Modify an existing object
     /// </summary>
-    public T? Put(int id, DTO putDto);
+    public T? Put(int id, TDto putDto);
 
     /// <summary>
-    /// Delet an object
+    /// Delete an object
     /// </summary>
     public bool Delete(int id);
 }

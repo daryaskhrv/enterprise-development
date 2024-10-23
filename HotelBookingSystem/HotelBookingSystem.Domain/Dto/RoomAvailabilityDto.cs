@@ -16,7 +16,7 @@ public class RoomAvailabilityDto
     public required int RoomId { get; set; }
 
     /// <summary>
-    /// Getthe type of the room
+    /// Get the type of the room
     /// </summary>
     public required string RoomType { get; set; }
 

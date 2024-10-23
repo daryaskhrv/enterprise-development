@@ -16,7 +16,7 @@ public interface IRepository<T>
     public T? GetById(int id);
 
     /// <summary>
-    /// Creat an object
+    /// Create an object
     /// </summary>
     public int Post(T entity);
 
@@ -26,7 +26,7 @@ public interface IRepository<T>
     public bool Put(T entity);
 
     /// <summary>
-    /// Delet an object
+    /// Delete an object
     /// </summary>
     public bool Delete(int id);
 }

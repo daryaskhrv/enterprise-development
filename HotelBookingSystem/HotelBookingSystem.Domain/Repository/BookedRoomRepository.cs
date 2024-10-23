@@ -21,7 +21,7 @@ public class BookedRoomRepository(HotelBookingDbContext context) : IRepository<B
         if (!clientExists || !roomExists)
             return -1;
 
-        int newId = context.BookedRooms.Count > 0 ? context.BookedRooms.Max(br => br.Id) + 1 : 1;
+        var newId = context.BookedRooms.Count > 0 ? context.BookedRooms.Max(br => br.Id) + 1 : 1;
         bookedRoom.Id = newId;
         context.BookedRooms.Add(bookedRoom);
         return newId;

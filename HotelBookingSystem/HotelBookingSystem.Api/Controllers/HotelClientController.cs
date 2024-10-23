@@ -77,7 +77,7 @@ public class HotelClientController(HotelClientService service) : ControllerBase
     {
         var clients = service.GetClientsInHotel(hotelName);
 
-        if (clients == null || !clients.Any())
+        if (!clients.Any())
             return NotFound("Hotel/clients not found");
 
         return Ok(clients);
@@ -91,7 +91,7 @@ public class HotelClientController(HotelClientService service) : ControllerBase
     {
         var clients = service.GetClientsWithLongestRentalPeriod();
 
-        if (clients == null || !clients.Any())
+        if (!clients.Any())
             return NotFound("Clients not found");
 
         return Ok(clients);

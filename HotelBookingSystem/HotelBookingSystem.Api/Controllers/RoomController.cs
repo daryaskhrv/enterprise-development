@@ -76,7 +76,7 @@ public class RoomController(RoomService service) : ControllerBase
     public ActionResult<IEnumerable<RoomAvailabilityDto>> FreeRoomsInCity(string city)
     {
         var availableRooms = service.FreeRoomsInCity(city);
-        if (availableRooms == null || !availableRooms.Any())
+        if (!availableRooms.Any())
             return NotFound($"No available rooms found in {city}.");
 
         return Ok(availableRooms);

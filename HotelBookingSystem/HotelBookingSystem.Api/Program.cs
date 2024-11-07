@@ -1,6 +1,7 @@
 using HotelBookingSystem.Api;
 using HotelBookingSystem.Api.Service;
 using HotelBookingSystem.Domain;
+using Microsoft.EntityFrameworkCore;
 using HotelBookingSystem.Domain.Repository;
 using System.Reflection;
 
@@ -16,6 +17,8 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddSingleton<HotelBookingDbContext>();
+
+builder.Services.AddDbContext<HotelBookingContext>(options => options.UseMySql(builder.Configuration.GetConnectionString("MySQL"), new MySqlServerVersion(new Version(8, 0, 39))));
 
 builder.Services.AddSingleton<HotelRepository>();
 builder.Services.AddSingleton<HotelClientRepository>();

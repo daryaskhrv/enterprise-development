@@ -16,7 +16,6 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddDbContext<HotelBookingContext>(options => options.UseMySql(builder.Configuration.GetConnectionString("MySQL"), new MySqlServerVersion(new Version(8, 0, 39))));
 
-builder.Services.AddScoped<HotelBookingDbContext>();
 builder.Services.AddScoped<HotelRepository>();
 builder.Services.AddScoped<HotelClientRepository>();
 builder.Services.AddScoped<RoomRepository>();

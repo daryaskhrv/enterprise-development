@@ -24,11 +24,11 @@ public class Mapping : Profile
         CreateMap<BookedRoomGetDto, BookedRoom>().ReverseMap();
         CreateMap<BookedRoomPostDto, BookedRoom>().ReverseMap();
 
-        CreateMap<HotelClientPostDto, HotelClientGetDto>()
+        CreateMap<HotelClientPostDto, HotelClient>()
             .ForMember(dest => dest.Birthdate, opt =>
                 opt.MapFrom(src => DateOnly.Parse(src.Birthdate)));
 
-        CreateMap<BookedRoomPostDto, BookedRoomGetDto>()
+        CreateMap<BookedRoomPostDto, BookedRoom>()
             .ForMember(dest => dest.EntryDate, opt =>
                 opt.MapFrom(src => DateOnly.Parse(src.EntryDate)))
             .ForMember(dest => dest.DepartureDate, opt =>

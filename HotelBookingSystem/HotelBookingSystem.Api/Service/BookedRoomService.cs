@@ -46,5 +46,4 @@ public class BookedRoomService(BookedRoomRepository repository, IMapper mapper) 
     {
         return repository.Delete(id);
     }
-
 }

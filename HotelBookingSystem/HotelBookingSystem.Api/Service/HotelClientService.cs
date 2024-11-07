@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HotelBookingSystem.Domain.Dto;
+using HotelBookingSystem.Domain.Entity;
 using HotelBookingSystem.Domain.Repository;
 
 namespace HotelBookingSystem.Api.Service;
@@ -12,19 +13,19 @@ public class HotelClientService(HotelClientRepository repository, IMapper mapper
     /// <inheritdoc />
     public IEnumerable<HotelClientGetDto> GetAll()
     {
-        return repository.GetAll();
+        return mapper.Map<IEnumerable<HotelClientGetDto>>(repository.GetAll());
     }
 
     /// <inheritdoc />
     public HotelClientGetDto? GetById(int id)
     {
-        return repository.GetById(id);
+        return mapper.Map<HotelClientGetDto>(repository.GetById(id));
     }
 
     /// <inheritdoc />
     public int Post(HotelClientPostDto postDto)
     {
-        return repository.Post(mapper.Map<HotelClientGetDto>(postDto));
+        return repository.Post(mapper.Map<HotelClient>(postDto));
     }
 
     /// <inheritdoc />
@@ -32,9 +33,9 @@ public class HotelClientService(HotelClientRepository repository, IMapper mapper
     {
         var hotelClient = mapper.Map<HotelClientGetDto>(putDto);
         hotelClient.Id = id;
-        bool isUpdated = repository.Put(hotelClient);
+        bool isUpdated = repository.Put(mapper.Map<HotelClient>(hotelClient));
         if (isUpdated)
-            return repository.GetById(hotelClient.Id);
+            return mapper.Map<HotelClientGetDto>(repository.GetById(hotelClient.Id));
 
         return null;
     }
@@ -50,7 +51,7 @@ public class HotelClientService(HotelClientRepository repository, IMapper mapper
     /// </summary>
     public IEnumerable<HotelClientGetDto> GetClientsInHotel(string hotelName)
     {
-        return repository.GetClientsInHotel(hotelName);
+        return mapper.Map<IEnumerable<HotelClientGetDto>>(repository.GetClientsInHotel(hotelName));
     }
 
     /// <summary>
@@ -58,6 +59,6 @@ public class HotelClientService(HotelClientRepository repository, IMapper mapper
     /// </summary>
     public IEnumerable<HotelClientGetDto?> GetClientsWithLongestRentalPeriod()
     {
-        return repository.GetClientsWithLongestRentalPeriod();
+        return mapper.Map<IEnumerable<HotelClientGetDto>>(repository.GetClientsWithLongestRentalPeriod());
     }
 }

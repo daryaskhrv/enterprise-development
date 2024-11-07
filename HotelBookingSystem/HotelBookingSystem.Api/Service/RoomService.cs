@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HotelBookingSystem.Domain.Dto;
+using HotelBookingSystem.Domain.Entity;
 using HotelBookingSystem.Domain.Repository;
 
 namespace HotelBookingSystem.Api.Service;
@@ -12,19 +13,19 @@ public class RoomService(RoomRepository repository, IMapper mapper) : IService<R
     /// <inheritdoc />
     public IEnumerable<RoomGetDto> GetAll()
     {
-        return repository.GetAll();
+        return mapper.Map<IEnumerable<RoomGetDto>>(repository.GetAll());
     }
 
     /// <inheritdoc />
     public RoomGetDto? GetById(int id)
     {
-        return repository.GetById(id);
+        return mapper.Map<RoomGetDto>(repository.GetById(id));
     }
 
     /// <inheritdoc />
     public int Post(RoomPostDto postDto)
     {
-        return repository.Post(mapper.Map<RoomGetDto>(postDto));
+        return repository.Post(mapper.Map<Room>(postDto));
 
     }
 
@@ -33,9 +34,9 @@ public class RoomService(RoomRepository repository, IMapper mapper) : IService<R
     {
         var room = mapper.Map<RoomGetDto>(putDto);
         room.Id = id;
-        bool isUpdated = repository.Put(room);
+        bool isUpdated = repository.Put(mapper.Map<Room>(room));
         if (isUpdated)
-            return repository.GetById(room.Id);
+            return mapper.Map<RoomGetDto>(repository.GetById(room.Id));
 
         return null;
     }

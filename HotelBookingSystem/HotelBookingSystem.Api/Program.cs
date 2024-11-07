@@ -7,8 +7,6 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers(); 
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -16,21 +14,22 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
-builder.Services.AddSingleton<HotelBookingDbContext>();
-
 builder.Services.AddDbContext<HotelBookingContext>(options => options.UseMySql(builder.Configuration.GetConnectionString("MySQL"), new MySqlServerVersion(new Version(8, 0, 39))));
 
-builder.Services.AddSingleton<HotelRepository>();
-builder.Services.AddSingleton<HotelClientRepository>();
-builder.Services.AddSingleton<RoomRepository>();
-builder.Services.AddSingleton<BookedRoomRepository>();
+builder.Services.AddScoped<HotelBookingDbContext>();
+builder.Services.AddScoped<HotelRepository>();
+builder.Services.AddScoped<HotelClientRepository>();
+builder.Services.AddScoped<RoomRepository>();
+builder.Services.AddScoped<BookedRoomRepository>();
 
-builder.Services.AddSingleton<HotelService>();
-builder.Services.AddSingleton<HotelClientService>();
-builder.Services.AddSingleton<RoomService>();
-builder.Services.AddSingleton<BookedRoomService>();
+builder.Services.AddScoped<HotelService>();
+builder.Services.AddScoped<HotelClientService>();
+builder.Services.AddScoped<RoomService>();
+builder.Services.AddScoped<BookedRoomService>();
 
 builder.Services.AddAutoMapper(typeof(Mapping));
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 

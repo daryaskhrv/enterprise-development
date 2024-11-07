@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HotelBookingSystem.Domain.Dto;
+using HotelBookingSystem.Domain.Entity;
 using HotelBookingSystem.Domain.Repository;
 
 namespace HotelBookingSystem.Api.Service;
@@ -12,19 +13,19 @@ public class HotelService(HotelRepository repository, IMapper mapper) : IService
     /// <inheritdoc />
     public IEnumerable<HotelGetDto> GetAll()
     {
-        return repository.GetAll();
+        return mapper.Map<IEnumerable<HotelGetDto>>(repository.GetAll());
     }
 
     /// <inheritdoc />
     public HotelGetDto? GetById(int id)
     {
-        return repository.GetById(id);
+        return mapper.Map<HotelGetDto>(repository.GetById(id));
     }
 
     /// <inheritdoc />
     public int Post(HotelPostDto postDto)
     {
-        return repository.Post(mapper.Map<HotelGetDto>(postDto));
+        return repository.Post(mapper.Map<Hotel>(postDto));
 
     }
 
@@ -33,9 +34,9 @@ public class HotelService(HotelRepository repository, IMapper mapper) : IService
     {
         var hotel = mapper.Map<HotelGetDto>(putDto);
         hotel.Id = id;
-        bool isUpdated = repository.Put(hotel);
+        bool isUpdated = repository.Put(mapper.Map<Hotel>(hotel));
         if (isUpdated)
-            return repository.GetById(hotel.Id);
+            return mapper.Map<HotelGetDto>(repository.GetById(hotel.Id));
 
         return null;
     }
@@ -51,6 +52,6 @@ public class HotelService(HotelRepository repository, IMapper mapper) : IService
     /// </summary>
     public IEnumerable<HotelGetDto?> GetTopHotels()
     {
-        return repository.GetTopHotels();
+        return mapper.Map<IEnumerable<HotelGetDto>>(repository.GetTopHotels());
     }
 }

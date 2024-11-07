@@ -1,42 +1,43 @@
 ﻿using HotelBookingSystem.Domain.Dto;
+using HotelBookingSystem.Domain.Entity;
 
 namespace HotelBookingSystem.Domain.Repository;
 
 /// <summary>
 /// Repository for working with hotel room data
 /// </summary>
-public class RoomRepository(HotelBookingDbContext context) : IRepository<RoomGetDto>
+public class RoomRepository(HotelBookingContext context) : IRepository<Room>
 {
     /// <inheritdoc />
-    public IEnumerable<RoomGetDto> GetAll() => context.Rooms;
+    public IEnumerable<Room> GetAll() => context.Rooms;
 
     /// <inheritdoc />
-    public RoomGetDto? GetById(int id) => context.Rooms.Find(x => x.Id == id);
+    public Room? GetById(int id) => context.Rooms.FirstOrDefault(x => x.Id == id);
 
     /// <inheritdoc />
-    public int Post(RoomGetDto room)
+    public int Post(Room room)
     {
         var hotelExists = context.Hotels.Any(h => h.Id == room.HotelId);
         if (!hotelExists)
             return -1;
 
-        var newId = context.Rooms.Count > 0 ? context.Rooms.Max(r => r.Id) + 1 : 1;
+        var newId = context.Rooms.Any() ? context.Rooms.Max(r => r.Id) + 1 : 1;
         room.Id = newId;
         context.Rooms.Add(room);
+        context.SaveChanges();
         return newId;
     }
 
     /// <inheritdoc />
-    public bool Put(RoomGetDto room)
+    public bool Put(Room room)
     {
         var oldValue = GetById(room.Id);
 
         if (oldValue == null)
             return false;
 
-        oldValue.Price = room.Price;
-        oldValue.Number = room.Number;
-        oldValue.TypeRoom = room.TypeRoom;
+        context.Entry(oldValue).CurrentValues.SetValues(room);
+        context.SaveChanges();
 
         return true;
     }
@@ -48,6 +49,7 @@ public class RoomRepository(HotelBookingDbContext context) : IRepository<RoomGet
         if (room == null)
             return false;
         context.Rooms.Remove(room);
+        context.SaveChanges();
         return true;
     }
 

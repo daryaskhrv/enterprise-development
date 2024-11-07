@@ -1,43 +1,44 @@
 ﻿using HotelBookingSystem.Domain.Dto;
+using HotelBookingSystem.Domain.Entity;
 
 namespace HotelBookingSystem.Domain.Repository;
 
 /// <summary>
 /// Repository for working with booked rooms data
 /// </summary>
-public class BookedRoomRepository(HotelBookingDbContext context) : IRepository<BookedRoomGetDto>
+public class BookedRoomRepository(HotelBookingContext context) : IRepository<BookedRoom>
 {
     /// <inheritdoc />
-    public IEnumerable<BookedRoomGetDto> GetAll() => context.BookedRooms;
+    public IEnumerable<BookedRoom> GetAll() => context.BookedRooms;
 
     /// <inheritdoc />
-    public BookedRoomGetDto? GetById(int id) => context.BookedRooms.Find(x => x.Id == id);
+    public BookedRoom? GetById(int id) => context.BookedRooms.FirstOrDefault(x => x.Id == id);
 
     /// <inheritdoc />
-    public int Post(BookedRoomGetDto bookedRoom)
+    public int Post(BookedRoom bookedRoom)
     {
         var clientExists = context.HotelClients.Any(c => c.Id == bookedRoom.ClientId);
         var roomExists = context.Rooms.Any(r => r.Id == bookedRoom.RoomId);
         if (!clientExists || !roomExists)
             return -1;
 
-        var newId = context.BookedRooms.Count > 0 ? context.BookedRooms.Max(br => br.Id) + 1 : 1;
+        var newId = context.BookedRooms.Any() ? context.BookedRooms.Max(br => br.Id) + 1 : 1;
         bookedRoom.Id = newId;
         context.BookedRooms.Add(bookedRoom);
+        context.SaveChanges();
         return newId;
     }
 
     /// <inheritdoc />
-    public bool Put(BookedRoomGetDto bookedRoom)
+    public bool Put(BookedRoom bookedRoom)
     {
         var oldValue = GetById(bookedRoom.Id);
 
         if (oldValue == null)
             return false;
 
-        oldValue.EntryDate = bookedRoom.EntryDate;
-        oldValue.DepartureDate = bookedRoom.DepartureDate;
-        oldValue.BookingPeriod = bookedRoom.BookingPeriod;
+        context.Entry(oldValue).CurrentValues.SetValues(bookedRoom);
+        context.SaveChanges();
 
         return true;
     }
@@ -49,6 +50,7 @@ public class BookedRoomRepository(HotelBookingDbContext context) : IRepository<B
         if (bookedRoom == null)
             return false;
         context.BookedRooms.Remove(bookedRoom);
+        context.SaveChanges();
         return true;
     }
 }

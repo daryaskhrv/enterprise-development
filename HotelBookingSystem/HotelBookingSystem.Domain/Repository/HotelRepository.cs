@@ -1,38 +1,38 @@
-﻿using HotelBookingSystem.Domain.Dto;
+﻿using HotelBookingSystem.Domain.Entity;
 
 namespace HotelBookingSystem.Domain.Repository;
 
 /// <summary>
 /// Repository for working with hotel data
 /// </summary>
-public class HotelRepository(HotelBookingDbContext context) : IRepository<HotelGetDto>
+public class HotelRepository(HotelBookingContext context) : IRepository<Hotel>
 {
     /// <inheritdoc />
-    public IEnumerable<HotelGetDto> GetAll() => context.Hotels;
+    public IEnumerable<Hotel> GetAll() => context.Hotels;
 
     /// <inheritdoc />
-    public HotelGetDto? GetById(int id) => context.Hotels.Find(x => x.Id == id);
+    public Hotel? GetById(int id) => context.Hotels.FirstOrDefault(x => x.Id == id);
 
     /// <inheritdoc />
-    public int Post(HotelGetDto hotel)
+    public int Post(Hotel hotel)
     {
-        var newId = context.Hotels.Count > 0 ? context.Hotels.Max(h => h.Id) + 1 : 1;
+        var newId = context.Hotels.Any() ? context.Hotels.Max(h => h.Id) + 1 : 1;
         hotel.Id = newId;
         context.Hotels.Add(hotel);
+        context.SaveChanges();
         return newId;
     }
 
     /// <inheritdoc />
-    public bool Put(HotelGetDto hotel)
+    public bool Put(Hotel hotel)
     {
         var oldValue = GetById(hotel.Id);
 
         if (oldValue == null)
             return false;
 
-        oldValue.Address = hotel.Address;
-        oldValue.City = hotel.City;
-        oldValue.Name = hotel.Name;
+        context.Entry(oldValue).CurrentValues.SetValues(hotel);
+        context.SaveChanges();
 
         return true;
     }
@@ -44,24 +44,29 @@ public class HotelRepository(HotelBookingDbContext context) : IRepository<HotelG
         if (hotel == null)
             return false;
         context.Hotels.Remove(hotel);
+        context.SaveChanges();
         return true;
     }
 
     /// <summary>
     ///  Information about the top 5 hotels with the most bookings
     /// </summary>
-    public IEnumerable<HotelGetDto?> GetTopHotels()
+    public IEnumerable<Hotel?> GetTopHotels()
     {
         var topHotels = context.BookedRooms
             .GroupBy(br => br.RoomId)
-            //number of bookings for each room
             .Select(g => new
             {
-                context.Rooms.FirstOrDefault(r => r.Id == g.Key)?.HotelId,
+                RoomId = g.Key,
                 BookingCount = g.Count()
             })
+            .Join(
+                context.Rooms,
+                br => br.RoomId,
+                r => r.Id,
+                (br, r) => new { r.HotelId, br.BookingCount }
+            )
             .GroupBy(x => x.HotelId)
-            //number of bookings for each hotel
             .Select(g => new
             {
                 HotelId = g.Key,

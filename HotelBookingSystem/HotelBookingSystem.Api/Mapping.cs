@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HotelBookingSystem.Domain.Dto;
+using HotelBookingSystem.Domain.Entity;
 
 namespace HotelBookingSystem.Api;
 
@@ -8,9 +9,20 @@ public class Mapping : Profile
     public Mapping() 
     {
         CreateMap<HotelGetDto, HotelPostDto>().ReverseMap();
+        CreateMap<HotelGetDto, Hotel>().ReverseMap();
+        CreateMap<HotelPostDto, Hotel>().ReverseMap();
+
         CreateMap<HotelClientGetDto, HotelClientPostDto>().ReverseMap();
+        CreateMap<HotelClientGetDto, HotelClient>().ReverseMap();
+        CreateMap<HotelClientPostDto, HotelClient>().ReverseMap();
+
         CreateMap<RoomGetDto, RoomPostDto>().ReverseMap();
+        CreateMap<RoomGetDto, Room>().ReverseMap();
+        CreateMap<RoomPostDto, Room>().ReverseMap();
+
         CreateMap<BookedRoomGetDto, BookedRoomPostDto>().ReverseMap();
+        CreateMap<BookedRoomGetDto, BookedRoom>().ReverseMap();
+        CreateMap<BookedRoomPostDto, BookedRoom>().ReverseMap();
 
         CreateMap<HotelClientPostDto, HotelClientGetDto>()
             .ForMember(dest => dest.Birthdate, opt =>

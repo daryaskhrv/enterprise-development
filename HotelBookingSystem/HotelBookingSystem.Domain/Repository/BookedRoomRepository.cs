@@ -1,5 +1,4 @@
-﻿using HotelBookingSystem.Domain.Dto;
-using HotelBookingSystem.Domain.Entity;
+﻿using HotelBookingSystem.Domain.Entity;
 
 namespace HotelBookingSystem.Domain.Repository;
 

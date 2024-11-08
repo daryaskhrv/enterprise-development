@@ -34,7 +34,7 @@ public class BookedRoomService(BookedRoomRepository repository, IMapper mapper) 
     {
         var broom = mapper.Map<BookedRoomGetDto>(putDto);
         broom.Id = id;
-        bool isUpdated = repository.Put(mapper.Map<BookedRoom>(broom));
+        var isUpdated = repository.Put(mapper.Map<BookedRoom>(broom));
         if (isUpdated)
             return mapper.Map<BookedRoomGetDto>(repository.GetById(broom.Id));
 

@@ -33,7 +33,7 @@ public class HotelClientService(HotelClientRepository repository, IMapper mapper
     {
         var hotelClient = mapper.Map<HotelClientGetDto>(putDto);
         hotelClient.Id = id;
-        bool isUpdated = repository.Put(mapper.Map<HotelClient>(hotelClient));
+        var isUpdated = repository.Put(mapper.Map<HotelClient>(hotelClient));
         if (isUpdated)
             return mapper.Map<HotelClientGetDto>(repository.GetById(hotelClient.Id));
 

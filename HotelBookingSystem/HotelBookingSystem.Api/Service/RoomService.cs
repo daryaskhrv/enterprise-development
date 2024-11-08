@@ -34,7 +34,7 @@ public class RoomService(RoomRepository repository, IMapper mapper) : IService<R
     {
         var room = mapper.Map<RoomGetDto>(putDto);
         room.Id = id;
-        bool isUpdated = repository.Put(mapper.Map<Room>(room));
+        var isUpdated = repository.Put(mapper.Map<Room>(room));
         if (isUpdated)
             return mapper.Map<RoomGetDto>(repository.GetById(room.Id));
 

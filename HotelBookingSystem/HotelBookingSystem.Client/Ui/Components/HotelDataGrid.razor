@@ -1,0 +1,102 @@
+﻿@inject IHotelBookingSystemApiWrapper HotelBookingSystemApi
+@inject NavigationManager NavManager
+
+<Card>
+    <CardHeader>
+        <Row Class="justify-content-between">
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <h4>Отели</h4>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <Button Color="Color.Primary" Clicked="OpenCreateModal">
+                    Создать
+                </Button>
+            </Column>
+        </Row>
+    </CardHeader>
+    <CardBody>
+        <DataGrid TItem="HotelGetDto"
+                  Data="Hotels"
+                  Responsive
+                  Striped>
+            <DataGridColumns>
+                <DataGridColumn Width="150px"
+                                TItem="HotelGetDto"
+                                Field="@nameof(HotelGetDto.Id)"
+                                Caption="Действия">
+                    <DisplayTemplate>
+                        <Dropdown>
+                            <DropdownToggle Color="Color.Primary">
+                                Действия
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem Clicked="() => OpenEditPageAsync(context)">
+                                    Редактировать
+                                </DropdownItem>
+                                <DropdownItem Clicked="() => DeleteHotelAsync(context)">
+                                    Удалить
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </DisplayTemplate>
+                </DataGridColumn>
+                <DataGridColumn TItem="HotelGetDto"
+                                Field="@nameof(HotelGetDto.Name)"
+                                Caption="Название">
+                </DataGridColumn>
+                <DataGridColumn TItem="HotelGetDto"
+                                Field="@nameof(HotelGetDto.Address)"
+                                Caption="Адрес">
+                </DataGridColumn>
+                <DataGridColumn TItem="HotelGetDto"
+                                Field="@nameof(HotelGetDto.City)"
+                                Caption="Город">
+                </DataGridColumn>
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>
+
+<HotelCreateModal @ref="HotelCreateModal" OnHotelAdded="@HandleHotelAdded" />
+
+@code {
+    [Parameter]
+    public EventCallback OnDataChanged { get; set; }
+
+    private ICollection<HotelGetDto> Hotels { get; set; } = [];
+
+    private HotelCreateModal HotelCreateModal { get; set; } = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshHotelCollection();
+        await base.OnInitializedAsync();
+    }
+
+    private void OpenEditPageAsync(HotelGetDto context)
+    {
+        NavManager.NavigateTo($"hotels/{context.Id}");
+    }
+
+    private async Task DeleteHotelAsync(HotelGetDto context)
+    {
+        await HotelBookingSystemApi.DeleteHotel(context.Id);
+        await RefreshHotelCollection();
+        await OnDataChanged.InvokeAsync();
+
+    }
+
+    private async Task HandleHotelAdded()
+    {
+        await RefreshHotelCollection();
+        await OnDataChanged.InvokeAsync();
+    }
+
+    private async Task OpenCreateModal() => await HotelCreateModal.Show();
+
+    private async Task RefreshHotelCollection()
+    {
+        Hotels = await HotelBookingSystemApi.GetAllHotels();
+    }
+}

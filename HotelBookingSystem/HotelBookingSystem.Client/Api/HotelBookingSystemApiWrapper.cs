@@ -4,12 +4,13 @@ public class HotelBookingSystemApiWrapper(IConfiguration configuration) : IHotel
 {
     public readonly HotelBookingSystemApi _client = new(configuration["OpenApi:ServerUrl"], new HttpClient());
 
-    public async Task<ICollection<HotelClientGetDto>> GetAllClients() => await _client.HotelClientAllAsync();
-    public async Task CreateClient(HotelClientPostDto clientDto) => await _client.HotelClientPOSTAsync(clientDto);
-    public async Task<HotelClientGetDto> GetClientById(int id) => await _client.HotelClientGETAsync(id);
-    public async Task<HotelClientGetDto> UpdateClient(int id, HotelClientPostDto clientDto) => await _client.HotelClientPUTAsync(id, clientDto);
-    public async Task DeleteClient(int id) => await _client.HotelClientDELETEAsync(id);
-    public async Task<ICollection<HotelClientGetDto>> GetClientsByHotel(string hotelName) => await _client.HotelAsync(hotelName);
-    public async Task<ICollection<HotelClientGetDto>> GetLongestRentalClients() => await _client.LongestRentalAsync();
-    
+    public async Task<ICollection<HotelGetDto>> GetAllHotels() => await _client.AllHotelsAsync();
+
+    public async Task<HotelGetDto> GetHotelById(int id) => await _client.HotelGETAsync(id);
+
+    public async Task<HotelGetDto> UpdateHotel(int id, HotelPostDto hotelDto) => await _client.HotelPUTAsync(id, hotelDto);
+
+    public async Task DeleteHotel(int id) => await _client.HotelDELETEAsync(id);
+
+    public async Task CreateHotel(HotelPostDto hotelDto) => await _client.HotelPOSTAsync(hotelDto);
 }

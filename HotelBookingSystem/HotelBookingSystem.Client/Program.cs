@@ -1,3 +1,6 @@
+using Blazorise;
+using Blazorise.Bootstrap5;
+using Blazorise.Icons.FontAwesome;
 using HotelBookingSystem.Client;
 using HotelBookingSystem.Client.Api;
 using Microsoft.AspNetCore.Components.Web;
@@ -10,5 +13,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 builder.Services.AddSingleton<IHotelBookingSystemApiWrapper, HotelBookingSystemApiWrapper>();
+
+builder.Services.AddBlazorise(options => { options.Immediate = true; }).AddBootstrap5Providers().AddFontAwesomeIcons();
 
 await builder.Build().RunAsync();

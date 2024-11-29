@@ -1,4 +1,4 @@
-﻿namespace HotelBookingSystem.Domain.Dto;
+﻿namespace HotelBookingSystem.Application.Dto;
 
 /// <summary>
 /// DTO class for GET method for hotel client

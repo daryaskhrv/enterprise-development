@@ -1,4 +1,4 @@
-﻿namespace HotelBookingSystem.Domain.Dto;
+﻿namespace HotelBookingSystem.Application.Dto;
 
 /// <summary>
 /// DTO for representing room price statistics in hotels.

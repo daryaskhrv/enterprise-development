@@ -1,7 +1,8 @@
-﻿using HotelBookingSystem.Domain.Dto;
-using HotelBookingSystem.Domain.Entity;
+﻿using HotelBookingSystem.Domain.Entity;
+using HotelBookingSystem.Domain;
+using HotelBookingSystem.Application.Dto;
 
-namespace HotelBookingSystem.Domain.Repository;
+namespace HotelBookingSystem.Application.Repository;
 
 /// <summary>
 /// Repository for working with hotel room data

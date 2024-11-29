@@ -2,11 +2,9 @@
 
 public interface IHotelBookingSystemApiWrapper
 {
-    Task<ICollection<HotelClientGetDto>> GetAllClients();
-    Task CreateClient(HotelClientPostDto clientDto);
-    Task<HotelClientGetDto> GetClientById(int id);
-    Task<HotelClientGetDto> UpdateClient(int id, HotelClientPostDto clientDto);
-    Task DeleteClient(int id);
-    Task<ICollection<HotelClientGetDto>> GetClientsByHotel(string hotelName);
-    Task<ICollection<HotelClientGetDto>> GetLongestRentalClients();
+    Task<ICollection<HotelGetDto>> GetAllHotels();
+    Task<HotelGetDto> GetHotelById(int id);
+    Task<HotelGetDto> UpdateHotel(int id, HotelPostDto hotelDto);
+    Task DeleteHotel(int id);
+    Task CreateHotel(HotelPostDto hotelDto);
 }

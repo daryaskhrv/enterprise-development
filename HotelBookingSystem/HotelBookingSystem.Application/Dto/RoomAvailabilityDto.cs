@@ -1,4 +1,4 @@
-﻿namespace HotelBookingSystem.Domain.Dto;
+﻿namespace HotelBookingSystem.Application.Dto;
 
 /// <summary>
 /// Represents the availability of rooms 

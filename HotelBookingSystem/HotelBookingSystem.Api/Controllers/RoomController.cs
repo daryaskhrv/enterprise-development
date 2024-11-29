@@ -1,4 +1,4 @@
-﻿using HotelBookingSystem.Domain.Dto;
+﻿using HotelBookingSystem.Application.Dto;
 using HotelBookingSystem.Api.Service;
 using Microsoft.AspNetCore.Mvc;
 

@@ -2,7 +2,7 @@ using HotelBookingSystem.Api;
 using HotelBookingSystem.Api.Service;
 using HotelBookingSystem.Domain;
 using Microsoft.EntityFrameworkCore;
-using HotelBookingSystem.Domain.Repository;
+using HotelBookingSystem.Application.Repository;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +30,14 @@ builder.Services.AddAutoMapper(typeof(Mapping));
 
 builder.Services.AddControllers();
 
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+{
+	policy.AllowAnyOrigin();
+	policy.AllowAnyMethod();
+	policy.AllowAnyHeader();
+}));
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -37,6 +45,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

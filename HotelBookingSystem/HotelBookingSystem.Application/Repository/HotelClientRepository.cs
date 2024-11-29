@@ -1,6 +1,7 @@
 ﻿using HotelBookingSystem.Domain.Entity;
+using HotelBookingSystem.Domain;
 
-namespace HotelBookingSystem.Domain.Repository;
+namespace HotelBookingSystem.Application.Repository;
 
 /// <summary>
 /// Repository for working with hotel client data
@@ -60,7 +61,7 @@ public class HotelClientRepository(HotelBookingContext context) : IRepository<Ho
 
         if (hotelId == 0)
         {
-            return Enumerable.Empty<HotelClient>(); 
+            return Enumerable.Empty<HotelClient>();
         }
 
         var clientIds = context.BookedRooms

@@ -1,0 +1,75 @@
+﻿@page "/hotels/{Id}"
+
+@inject IHotelBookingSystemApiWrapper HotelBookingSystemApi
+@inject IJSRuntime JsRuntime
+
+<Card>
+    <CardHeader>
+        <Row Class="justify-content-between">
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <h4>Редактировать информацию об отеле</h4>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <Button Color="Color.Primary" Clicked="UpdateHotelAsync">
+                    Сохранить
+                </Button>
+                <Button Color="Color.Danger" Clicked="DeleteHotelAsync">
+                    Удалить
+                </Button>
+                <Button Color="Color.Secondary" onclick="history.back();">
+                    Закрыть
+                </Button>
+            </Column>
+        </Row>
+    </CardHeader>
+
+    <CardBody>
+        <Field>
+            <FieldLabel>Название</FieldLabel>
+            <TextEdit @bind-Text="@Hotel.Name" />
+        </Field>
+        <Field>
+            <FieldLabel>Адрес</FieldLabel>
+            <TextEdit @bind-Text="@Hotel.Address" />
+        </Field>
+        <Field>
+            <FieldLabel>Город</FieldLabel>
+            <TextEdit @bind-Text="@Hotel.City" />
+        </Field>
+    </CardBody>
+</Card>
+
+@code {
+    [Parameter]
+    public string Id { get; set; } = "";
+
+    private int HotelId { get; set; }
+    private HotelGetDto Hotel { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!int.TryParse(Id, out var id))
+            throw new Exception("Некорректный идентификатор");
+        HotelId = id;
+        Hotel = await HotelBookingSystemApi.GetHotelById(HotelId);
+        await base.OnInitializedAsync();
+    }
+
+    private async Task DeleteHotelAsync()
+    {
+        await HotelBookingSystemApi.DeleteHotel(HotelId);
+        await JsRuntime.InvokeVoidAsync("history.back");
+    }
+
+    private async Task UpdateHotelAsync()
+    {
+        var EditedHotel = new HotelPostDto
+            {
+                Name = Hotel.Name,
+                Address = Hotel.Address,
+                City = Hotel.City
+            };
+        Hotel = await HotelBookingSystemApi.UpdateHotel(HotelId, EditedHotel);
+        await JsRuntime.InvokeVoidAsync("history.back");
+    }
+}

@@ -63,13 +63,13 @@
 
     private async Task UpdateHotelAsync()
     {
-        var EditedHotel = new HotelPostDto
+        var editedHotel = new HotelPostDto
             {
                 Name = Hotel.Name,
                 Address = Hotel.Address,
                 City = Hotel.City
             };
-        Hotel = await HotelBookingSystemApi.UpdateHotel(HotelId, EditedHotel);
+        Hotel = await HotelBookingSystemApi.UpdateHotel(HotelId, editedHotel);
         await JsRuntime.InvokeVoidAsync("history.back");
     }
 }
